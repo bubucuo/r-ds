@@ -1,0 +1,32 @@
+
+
+library( rpart )
+library( rpart.plot )
+
+
+tr_set = rpart.control( maxdepth = 1 )
+
+t1 = rpart( data=iris, Species ~ Sepal.Length, control=tr_set)
+rpart.plot(t1)
+
+t2 = rpart( data=iris, Species ~ Sepal.Width, control=tr_set)
+rpart.plot(t2)
+
+t3 = rpart( data=iris, Species ~ Petal.Length, control=tr_set)
+rpart.plot(t3)
+
+t4 = rpart( data=iris, Species ~ Petal.Width, control=tr_set)
+rpart.plot(t4)
+
+
+theTree = rpart( data=iris, Species ~ Sepal.Length+Sepal.Width+Petal.Length+Petal.Width, control=tr_set)
+rpart.plot(theTree)
+
+
+
+theTree = rpart( data=iris, Species ~ ., control=tr_set)
+rpart.plot(theTree)
+
+
+
+#theTree$variable.importance

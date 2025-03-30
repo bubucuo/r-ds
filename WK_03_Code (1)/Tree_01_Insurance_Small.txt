@@ -1,0 +1,46 @@
+library( rpart )
+library( rpart.plot )
+library( ROCR )
+
+
+
+PATH 		= "C:/Users/Trine/Desktop/TRINE_5213/DATA"
+FILE_NAME 	= "Insurance_Scrubbed.csv"
+
+INFILE = paste( PATH, FILE_NAME, sep="/" )
+
+
+setwd( PATH )
+df = read.csv( FILE_NAME )
+ 
+str( df )
+summary( df )
+
+
+
+
+tr_set = rpart.control( maxdepth = 3 )
+
+
+df_flag = df
+df_flag$TARGET_CLM_AMT = NULL
+
+tree_flag = rpart( data=df_flag, TARGET_CLM_FLAG ~ ., control=tr_set )
+rpart.plot( tree_flag )
+
+tree_flag$variable.importance
+
+
+p = predict( tree_flag, df_flag )
+dfp = as.data.frame( p )
+head( dfp )
+
+p2 = prediction( p, df_flag$TARGET_CLM_FLAG )
+p3 = performance( p2, "tpr", "fpr" )
+
+plot( p3, col=rainbow(10) )
+abline(0,1,lty=2)
+
+auc = performance( p2, "auc" )@y.values
+
+

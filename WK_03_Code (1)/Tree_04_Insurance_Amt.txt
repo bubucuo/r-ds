@@ -1,0 +1,74 @@
+
+
+library( rpart )
+library( rpart.plot )
+library( ROCR )
+
+
+
+PATH 		= "C:/Users/Trine/Desktop/TRINE_5213/DATA"
+FILE_NAME 	= "Insurance_Scrubbed.csv"
+
+INFILE = paste( PATH, FILE_NAME, sep="/" )
+
+
+setwd( PATH )
+df = read.csv( FILE_NAME )
+ 
+str( df )
+summary( df )
+
+
+df_amt = df
+df_amt$TARGET_CLM_FLAG = NULL
+mean( df_amt$TARGET_CLM_AMT )
+
+tr_set = rpart.control( maxdepth = 10 )
+
+t1a = rpart( data=df_amt, TARGET_CLM_AMT ~ ., control=tr_set, method="anova" )
+rpart.plot( t1a )
+t1a$variable.importance
+p1a = predict( t1a, df )
+RMSE1a = sqrt( mean( ( df$TARGET_CLM_AMT - p1a )^2 ) )
+print( RMSE1a )
+
+
+t1p = rpart( data=df_amt, TARGET_CLM_AMT ~ ., control=tr_set, method="poisson" )
+rpart.plot( t1p )
+t1p$variable.importance
+p1p = predict( t1p, df )
+RMSE1p = sqrt( mean( ( df$TARGET_CLM_AMT - p1p )^2 ) )
+print( RMSE1p )
+
+
+
+print( RMSE1a )
+print( RMSE1p )
+
+
+
+####################################################################################
+
+df_flag = df
+df_flag$TARGET_CLM_AMT = NULL
+
+t2_f = rpart( data=df_flag, TARGET_CLM_FLAG ~ ., control=tr_set )
+rpart.plot( t2_f )
+p2_f = predict( t2_f, df )
+
+df_amt_2 = subset( df, TARGET_CLM_FLAG == 1 )
+df_amt_2$TARGET_CLM_FLAG = NULL
+head(df_amt_2)
+t2_a = rpart( data=df_amt_2, TARGET_CLM_AMT ~ ., control=tr_set, method="poisson" )
+rpart.plot( t2_a )
+p2_a = predict( t2_a, df )
+
+p2 = p2_f * p2_a
+RMSE2 = sqrt( mean( ( df$TARGET_CLM_AMT - p2 )^2 ) )
+
+print( RMSE1p )
+print( RMSE2 )
+
+
+
+
