@@ -1,0 +1,28 @@
+
+TARGET_CLM_FLAG		: Was the driver in a car accident after the policy was written
+TARGET_CLM_AMT		: If the person was in an accident, what did it cost to repair their car
+
+KIDSDRIV		: How many teenagers drive the car
+AGE			: What is the age of the policy holder
+HOMEKIDS		: How many children are at home
+YOJ			: How many "Years on Job" at the current job
+INCOME			: What is the income of the driver
+PARENT1			: Is the person a single parent
+HOME_VAL		: What is the value of the person's home
+MSTATUS			: Is the person married
+SEX			: Is the person male or female
+EDUCATION		: What is the education level of the driver
+JOB			: What is the job of the driver
+TRAVTIME		: What is the travel time to work
+CAR_USE			: Is the car used for personal or commercial purposes
+BLUEBOOK		: What is the blue book value of the car
+TIF			: What is the "time in force" of the policy in years
+NPOLICY			: How many drivers are on thie policy
+CAR_TYPE		: What type of car is being insured
+RED_CAR			: Is the car red
+OLDCLAIM		: How much money was spent in damages in the past 3 years
+CLM_FREQ		: How many collisions were in the last three years
+REVOKED			: Has the person ever had thier license revoked
+MVR_PTS			: How many traffic tickets did the driver have in the past 3 years
+CAR_AGE			: How old is the car in years
+URBANICITY		: What type of environment does the person live in
